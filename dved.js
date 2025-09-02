@@ -1,18 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Detect by UA OR screen width
+  // Detect if the user is on mobile (by UA or screen width)
   const isMobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     ) || window.innerWidth <= 768;
 
   if (isMobile) {
-    document.getElementById("mobile-warning").style.display = "flex";
-    const mainContent = document.querySelector(".main-content");
-    if (mainContent) mainContent.style.display = "none";
+    // Show the mobile warning link
+    const mobileWarning = document.getElementById("mobile-warning");
+    if (mobileWarning) mobileWarning.style.display = "flex";
+
+    // Hide only the viewport videos grid
+  const viewportContent = document.querySelector(".viewport-content");
+    if (viewportContent) viewportContent.style.display = "none";
+
+    // Stop further desktop-specific scripts
     return;
   }
 
-  // Existing fade-in + GIF hover code
+  // Fade-in animations for all elements with .fade-in  
   const faders = document.querySelectorAll(".fade-in");
   const appearOnScroll = new IntersectionObserver(
     (entries, observer) => {
@@ -25,9 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     { threshold: 0.2 }
   );
-
   faders.forEach((fader) => appearOnScroll.observe(fader));
 
+  // GIF hover effect for elements inside .video-card
   document.querySelectorAll(".video-card img").forEach((img) => {
     const staticSrc = img.src;
     const gifSrc = img.getAttribute("data-gif");
@@ -39,19 +45,4 @@ document.addEventListener("DOMContentLoaded", () => {
       img.src = staticSrc;
     });
   });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const isMobile =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    ) || window.innerWidth <= 768;
-
-  if (isMobile) {
-    const mobileWarning = document.getElementById("mobile-warning");
-    const mainContent = document.querySelector(".main-content");
-
-    if (mobileWarning) mobileWarning.style.display = "flex";
-    if (mainContent) mainContent.style.display = "none";
-  }
 });
