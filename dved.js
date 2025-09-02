@@ -40,3 +40,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    ) || window.innerWidth <= 768;
+
+  if (isMobile) {
+    const mobileWarning = document.getElementById("mobile-warning");
+    const mainContent = document.querySelector(".main-content");
+
+    if (mobileWarning) mobileWarning.style.display = "flex";
+    if (mainContent) mainContent.style.display = "none";
+  }
+});
