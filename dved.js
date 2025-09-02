@@ -11,14 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mobileWarning) mobileWarning.style.display = "flex";
 
     // Hide only the viewport videos grid
-  const viewportContent = document.querySelector(".viewport-content");
-    if (viewportContent) viewportContent.style.display = "none";
+    const viewportGrid = document.querySelector(".viewport-grid");
+    if (viewportGrid) viewportGrid.style.display = "none";
 
-    // Stop further desktop-specific scripts
+    // Stop desktop-specific scripts
     return;
   }
 
-  // Fade-in animations for all elements with .fade-in  
+  // Fade-in animations for all elements with .fade-in
   const faders = document.querySelectorAll(".fade-in");
   const appearOnScroll = new IntersectionObserver(
     (entries, observer) => {
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gifSrc = img.getAttribute("data-gif");
 
     img.addEventListener("mouseenter", () => {
-      img.src = gifSrc;
+      if (gifSrc) img.src = gifSrc;
     });
     img.addEventListener("mouseleave", () => {
       img.src = staticSrc;
