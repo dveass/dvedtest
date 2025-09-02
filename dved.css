@@ -1,32 +1,33 @@
 
-/* Import Poppins font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
+/* ===== Body & Background ===== */
 body {
   font-family: 'Poppins', sans-serif;
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.295), rgba(0, 0, 0, 0.295)), /* black overlay */
-    url("images/backgound/bg.jpg") no-repeat center center;
-  background-size: 320%; /* zoom effect */
-  background-attachment: scroll; /* allow scrolling */
-  color: #ffffff; /* switch to white text for contrast */
+  color: #fff;
   line-height: 1.6;
+  background: 
+    linear-gradient(rgba(0,0,0,0.295), rgba(0,0,0,0.295)),
+    url("images/backgound/bg.jpg") no-repeat center center;
+  background-size: cover; /* desktop normal */
+  background-position: center center;
+  background-attachment: fixed;
 }
-
-/* For mobile devices */
+/* Mobile zoom effect */
 @media (max-width: 768px) {
   body {
-    background-size: auto;        /* Let the background repeat naturally */
-    background-repeat: repeat;    /* Tile the background */
-    background-attachment: scroll; /* Keep it fixed with scrolling */
+    background-size: 1000% auto; /* zoomed-in on mobile */
+    background-position: center center; /* keep it centered */
+    background-attachment: fixed; /* keep it fixed */
   }
 }
+
+
+
 
 /* Header */
 header {
     display: flex;
     justify-content: space-between; /* logo left, icons right */
-    align-items: center;
+    align-items: center;  
     padding: 15px 30px;
     background: transparent; /* no solid bg */
     position: relative;
@@ -237,14 +238,16 @@ footer {
   
   
   /* Hidden before scroll */
-  .fade-in {
-    opacity: 0;
-    transition: opacity 1s ease-out;
-  }
-  
-  .fade-in.visible {
-    opacity: 1;
-  }
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-out; /* smooth fade-in */
+}
+
+.fade-in.visible {
+  opacity: 1;
+}
+
+
   
   /* Make section titles bigger */
 .viewport h2,
@@ -267,7 +270,7 @@ footer {
 }
 
 .mobile-warning a {
-  color: #00aaff;
+  color: #ffc400;
   text-decoration: none;
   font-weight: bold;
 }

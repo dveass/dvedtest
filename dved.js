@@ -45,3 +45,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+const faders = document.querySelectorAll('.fade-in');
+
+function checkFadeIn() {
+  const windowHeight = window.innerHeight;
+
+  faders.forEach(fader => {
+    const rect = fader.getBoundingClientRect();
+    // Trigger fade-in if element is visible in viewport
+    if (rect.top < windowHeight && rect.bottom > 0) {
+      fader.classList.add('visible');
+    }
+  });
+}
+
+// Run on scroll
+window.addEventListener('scroll', checkFadeIn);
+
+// Run immediately on page load (fix for mobile)
+window.addEventListener('load', checkFadeIn);
+
+// Optional: run on resize (in case of orientation changes)
+window.addEventListener('resize', checkFadeIn);
