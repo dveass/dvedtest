@@ -4,19 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
       navigator.userAgent
     ) || window.innerWidth <= 768;
 
-  if (isMobile) {
-    // Show mobile warning
-    const mobileWarning = document.getElementById("mobile-warning");
-    if (mobileWarning) mobileWarning.style.display = "flex";
 
-    // Hide only the iframe videos inside the grid
-    document.querySelectorAll(".viewport-videos iframe").forEach((iframe) => {
-      iframe.style.display = "none";
-    });
 
-    return;
-  }
-
+    
   // Fade-in animations
   const faders = document.querySelectorAll(".fade-in");
   const appearOnScroll = new IntersectionObserver(
@@ -32,39 +22,63 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   faders.forEach((fader) => appearOnScroll.observe(fader));
 
-  // GIF hover for personal videos
-  document.querySelectorAll(".video-card img").forEach((img) => {
-    const staticSrc = img.src;
-    const gifSrc = img.getAttribute("data-gif");
+  // --- Video hover for personal videos ---
+  document.querySelectorAll(".video-card").forEach((card) => {
+    const img = card.querySelector("img");
+    const videoSrc = img.getAttribute("data-video");
 
+    if (!videoSrc) return; // skip if no video
+
+    // Create video element dynamically
+    const video = document.createElement("video");
+    video.src = videoSrc;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.style.borderRadius = "15px";
+    video.style.display = "none";
+    video.style.width = "100%";
+    video.style.marginBottom = "20px";
+
+    // Insert before image
+    img.parentNode.insertBefore(video, img);
+
+    // Hover logic
     img.addEventListener("mouseenter", () => {
-      if (gifSrc) img.src = gifSrc;
+      img.style.display = "none";
+      video.style.display = "block";
+      video.play();
     });
-    img.addEventListener("mouseleave", () => {
-      img.src = staticSrc;
+
+    video.addEventListener("mouseleave", () => {
+      video.pause();
+      video.currentTime = 0;
+      video.style.display = "none";
+      img.style.display = "block";
     });
   });
 });
 
-const faders = document.querySelectorAll('.fade-in');
+// --- Extra fade-in fallback ---
+const faders = document.querySelectorAll(".fade-in");
 
 function checkFadeIn() {
   const windowHeight = window.innerHeight;
 
-  faders.forEach(fader => {
+  faders.forEach((fader) => {
     const rect = fader.getBoundingClientRect();
     // Trigger fade-in if element is visible in viewport
     if (rect.top < windowHeight && rect.bottom > 0) {
-      fader.classList.add('visible');
+      fader.classList.add("visible");
     }
   });
 }
 
 // Run on scroll
-window.addEventListener('scroll', checkFadeIn);
+window.addEventListener("scroll", checkFadeIn);
 
 // Run immediately on page load (fix for mobile)
-window.addEventListener('load', checkFadeIn);
+window.addEventListener("load", checkFadeIn);
 
 // Optional: run on resize (in case of orientation changes)
-window.addEventListener('resize', checkFadeIn);
+window.addEventListener("resize", checkFadeIn);
